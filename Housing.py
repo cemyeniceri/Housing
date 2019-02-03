@@ -1,12 +1,12 @@
 import numpy
 import pandas
-from keras.models import Sequential
 from keras.layers import Dense
+from keras.models import Sequential
 from keras.wrappers.scikit_learn import KerasRegressor
-from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import KFold
-from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import cross_val_score
 from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
 
 # load dataset
 dataFrame = pandas.read_csv("housing.csv", delim_whitespace=True, header=None)
@@ -85,3 +85,8 @@ pipeline = Pipeline(estimators)
 kFold = KFold(n_splits=10, random_state=seed)
 results = cross_val_score(pipeline, X, Y, cv=kFold)
 print("Wider: %.2f (%.2f) MSE" % (results.mean(), results.std()))
+
+# housing :  0.04741   0.00  11.930  0  0.5730  6.0300  80.80  2.5050   1  273.0  21.00 396.90   7.88  11.90
+Xnew = numpy.array([[0.04741, 0.00, 11.930, 0, 0.5730, 6.0300, 80.80, 2.5050, 1, 273.0, 21.00, 396.90, 7.88]])
+ynew = wider_model().predict(Xnew)
+print("X=%s, Predicted=%s" % (Xnew[0], ynew[0]))
